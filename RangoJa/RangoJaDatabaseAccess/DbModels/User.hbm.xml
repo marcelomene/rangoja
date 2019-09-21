@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="RangoJaDatabaseAccess"
+                   namespace="RangoJaDatabaseAccess.DbModels">
+
+  <class name="User" table="user">
+    <id name="Id" column="id">
+      <generator class="identity" />
+    </id>
+    <property name="Name" column="nome" />
+    <property name="Address" column="endereco" />
+    <property name="SocialId" column="cpf" />
+  </class>
+</hibernate-mapping>
