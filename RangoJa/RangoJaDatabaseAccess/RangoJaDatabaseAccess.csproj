@@ -77,6 +77,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DbModels\ApplianceType.cs" />
+    <Compile Include="DbModels\Ingredient.cs" />
+    <Compile Include="DbModels\Recipe.cs" />
+    <Compile Include="DbModels\RecipeType.cs" />
     <Compile Include="DbModels\User.cs" />
     <Compile Include="NHibernate\DatabaseOperations.cs" />
     <Compile Include="NHibernate\IDatabaseOperations.cs" />
@@ -88,6 +92,10 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="DbModels\User.hbm.xml" />
+    <Content Include="DbModels\ApplianceType.hbm.xml" />
+    <Content Include="DbModels\Ingredient.hbm.xml" />
+    <Content Include="DbModels\Recipe.hbm.xml" />
+    <Content Include="DbModels\RecipeType.hbm.xml" />
     <Content Include="hibernate.cfg.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

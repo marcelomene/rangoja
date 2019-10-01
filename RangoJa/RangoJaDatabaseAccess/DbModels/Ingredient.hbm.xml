@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="RangoJaDatabaseAccess"
+                   namespace="RangoJaDatabaseAccess.DbModels">
+
+  <class name="Ingredient" table="Ingredients">
+    <id name="Id" column="IdIngredient">
+      <generator class="identity" />
+    </id>
+    <property name="Name" column="Ingredient" />
+    <property name="Amount" column="Amount" />
+  </class>
+</hibernate-mapping>

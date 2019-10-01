@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="RangoJaDatabaseAccess"
+                   namespace="RangoJaDatabaseAccess.DbModels">
+
+  <class name="Recipe" table="Recipe">
+    <id name="Id" column="IdRecipe">
+      <generator class="identity" />
+    </id>
+    <property name="Name" column="Name" />
+    <property name="CookedCounter" column="Cooked_Counter" />
+    <set name="Ingredients" table="Recipe_Ingredients" lazy="false">
+      <key column="IdRecipe"/>
+      <many-to-many class="DBModels.Ingredient" column="IdIngredient"/>
+    </set>
+    <many-to-one name="User">
+      <column name="IdUser" not-null="false" />
+    </many-to-one>
+    <property name="PreparationMode" column="Preparation" />
+    <many-to-one name="RecipeType">
+      <column name="IdRecipeType" not-null="false" />
+    </many-to-one>
+  </class>
+</hibernate-mapping>
