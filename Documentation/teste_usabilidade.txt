@@ -1,0 +1,41 @@
+Atividade 01:
+Busca de receita 
+
+Atividade 02:
+Vá para tela inicial
+
+Atividade 03:
+Inserir receita
+
+Atividade 04:
+Nos deixe um feedback (:
+
+
+--Perguntas para o usuário--
+
+Nome: Giulia
+Curso: ADS
+Trabalho: Teste de software
+Experiencias com Sistemas: VSTS, Gira, GIT HUB
+
+Buscar receitas primeiro
+"Nos ajude a te ajudar ficou pequeno"
+Scroll, Aumentar fonte do modo do preparo
+
+Clicou no voltar superior
+
+Voltar para tela exatamente anterior (atualmente volta para a inicial)
+
+Botão para mostrar quais filtros existem (se houver mais de 3)
+
+Filtro pra cima, antes da caixa de texto e botão
+
+Ver como mostrar quais ingredientes já foram digitados
+
+Quantidade de ingrediente (ISSO TEM QUE ATUALIZAR BANCO E CLASSES)
+
+Categoria -> Filtros
+
+Ajustes para melhorar experiência, no geral tá bem legal e intuitivo.
+
+Rotação da tela para modo de preparo.
