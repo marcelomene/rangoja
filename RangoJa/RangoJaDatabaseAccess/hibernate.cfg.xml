@@ -14,3 +14,8 @@
       <property name="current_session_context_class">async_local</property>
     </session-factory>
   </hibernate-configuration>
+
+<!--https://remotemysql.com/phpmyadmin/db_sql.php?db=cInQeeudyg-->
+<!--banco: cInQeeudyg
+senha: ExQh72FJcz-->
+
