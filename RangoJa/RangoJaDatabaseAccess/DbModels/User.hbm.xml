@@ -3,12 +3,12 @@
                    assembly="RangoJaDatabaseAccess"
                    namespace="RangoJaDatabaseAccess.DbModels">
 
-  <class name="User" table="user">
-    <id name="Id" column="id">
+  <class name="User" table="Users">
+    <id name="Id" column="IdUser">
       <generator class="identity" />
     </id>
-    <property name="Name" column="nome" />
-    <property name="Address" column="endereco" />
-    <property name="SocialId" column="cpf" />
+    <property name="Name" column="Name" />
+    <property name="Email" column="Email" />
+    <property name="Password" column="Password" />
   </class>
 </hibernate-mapping>

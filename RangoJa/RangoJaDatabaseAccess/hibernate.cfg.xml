@@ -5,9 +5,9 @@
       <property name="connection.driver_class">NHibernate.Driver.MySqlDataDriver</property>
       <property name="connection.provider">NHibernate.Connection.DriverConnectionProvider</property>
       
-      <!-- Aqui você deve coloca o seu Connectio String -->
+      <!-- Aqui você deve coloca o seu Connection String -->
       <property name="connection.connection_string">
-        Server=remotemysql.com;Database=pwuPcv5B5i;User ID=pwuPcv5B5i;Password=WJK7G2G3YK;
+        Server=remotemysql.com;Database=cInQeeudyg;User ID=cInQeeudyg;Password=ExQh72FJcz;
       </property>
       
       <property name="dialect">NHibernate.Dialect.MySQL5Dialect</property>
