@@ -11,14 +11,17 @@ namespace RanjoJaTests
     public class DatabaseTests
     {
         [TestMethod]
-        public void SaveTest()
+        public void SaveObjectTest()
         {
-            User user = new User();
-            user.Name = "Roger Leite";
-            user.Address = "Avenida D, 234";
-            user.SocialId = "222.222.222-22";
+            User user = new User("Marcelo", "mm@mm.com", "123456");
+            new DatabaseOperations().SaveObject(user);
+        }
 
-            new DatabaseOperations().Save(user);
+        [TestMethod]
+        public void GetObject()
+        {
+            DatabaseOperations dbOps = new DatabaseOperations();
+            User user = dbOps.GetObject(1, typeof(User));
         }
     }
 }
