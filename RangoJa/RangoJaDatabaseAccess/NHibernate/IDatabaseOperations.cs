@@ -8,6 +8,20 @@ namespace RangoJaDatabaseAccess.NHibernate
 {
     interface IDatabaseOperations
     {
-        void Save<T>(T obj);
+        /// <summary>
+        /// Saves a object in the database.
+        /// </summary>
+        /// <typeparam name="T">Generic type.</typeparam>
+        /// <param name="obj">Object.</param>
+        void SaveObject<T>(T obj);
+
+        /// <summary>
+        /// Gets a object from the database.
+        /// </summary>
+        /// <typeparam name="T">Generic type.</typeparam>
+        /// <param name="id">Object id.</param>
+        /// <param name="type">Object type.</param>
+        /// <returns></returns>
+        T GetObject<T>(int id, T type);
     }
 }

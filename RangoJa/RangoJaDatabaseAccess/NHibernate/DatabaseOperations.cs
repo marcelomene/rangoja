@@ -9,7 +9,7 @@ namespace RangoJaDatabaseAccess.NHibernate
 {
     public class DatabaseOperations : IDatabaseOperations
     {
-        public void Save<T>(T obj)
+        public void SaveObject<T>(T obj)
         {
             ISession session = NHibernateHelper.GetSession();
             ITransaction transaction = session.BeginTransaction();
@@ -18,6 +18,26 @@ namespace RangoJaDatabaseAccess.NHibernate
             transaction.Commit();
 
             NHibernateHelper.CloseSession();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="id"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public T GetObject<T>(int id, T type)
+        {
+            ISession session = NHibernateHelper.GetSession();
+            ITransaction transaction = session.BeginTransaction();
+
+            object obj = session.Get(typeof(T), id);
+            transaction.Commit();
+
+            NHibernateHelper.CloseSession();
+
+            return (T)obj;
         }
     }
 }
