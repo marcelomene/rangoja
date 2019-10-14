@@ -49,6 +49,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="NHibernate">
+      <Version>5.2.6</Version>
+    </PackageReference>
     <PackageReference Include="System.Threading.Tasks.Extensions">
       <Version>4.5.3</Version>
     </PackageReference>

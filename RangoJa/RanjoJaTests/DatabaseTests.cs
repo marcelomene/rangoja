@@ -21,7 +21,7 @@ namespace RanjoJaTests
         public void GetObject()
         {
             DatabaseOperations dbOps = new DatabaseOperations();
-            User user = dbOps.GetObject(1, typeof(User));
+            Recipe recipe = dbOps.GetObject<Recipe>(1);
         }
     }
 }

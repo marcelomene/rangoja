@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace RangoJaDatabaseAccess.DbModels
 {
-    public class Ingredient
-    {
-        public virtual int Id {get; set;}
+    public class Unit
+    { 
+        public virtual int Id { get; set; }
         public virtual string Name { get; set; }
+        
+        public Unit() { }
 
-        public Ingredient() { }
-
-        public Ingredient(int id, string name)
+        public Unit(int id, string name)
         {
             Id = id;
             Name = name;

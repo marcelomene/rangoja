@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RangoJa.Views.SearchRecipePage"
+             xmlns:vm="clr-namespace:RangoJa.ViewModel">
+    
+    <ContentPage.BindingContext>
+        <vm:SearchRecipePageViewModel/>
+    </ContentPage.BindingContext>
+    
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <StackLayout Grid.Row="1">
+                <Image Source="AppIcon.png" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" HeightRequest="100" WidthRequest="100"/>
+                <Label Text="Digite aqui os seus ingredientes disponíveis" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Margin="20"/>
+                <Entry Text="{Binding SearchQuery}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="300"/>
+                <ScrollView HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                    <ListView ItemsSource="{Binding IngredientsToSearch}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                </ScrollView>
+                <!--Insert filter stuff here later-->
+                <Button Text="Buscar" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="#6FA788" Margin="10" CornerRadius="10" WidthRequest="300" HeightRequest="50"/>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

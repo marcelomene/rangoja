@@ -4,21 +4,38 @@
                    namespace="RangoJaDatabaseAccess.DbModels">
 
   <class name="Recipe" table="Recipe">
+    
     <id name="Id" column="IdRecipe">
       <generator class="identity" />
     </id>
+    
     <property name="Name" column="Name" />
-    <property name="CookedCounter" column="Cooked_Counter" />
+    
     <set name="Ingredients" table="Recipe_Ingredients" lazy="false">
       <key column="IdRecipe"/>
-      <many-to-many class="DBModels.Ingredient" column="IdIngredient"/>
+      <many-to-many class="Ingredient" column="IdIngredient"/>
     </set>
-    <many-to-one name="User">
+    
+    <set name="UnitTypes" table="Recipe_Ingredients" lazy="false">
+      <key column="IdRecipe"/>
+      <many-to-many class="Unit" column="IdUnitType"/>
+    </set>
+
+    <!--<set name="Amounts" table="Recipe_Ingredients" lazy="false">
+      <key column="IdRecipe"/>
+      <many-to-many class="Amount" column="Amount"/>
+    </set>-->
+
+    <many-to-one name="User" class="User">
       <column name="IdUser" not-null="false" />
     </many-to-one>
-    <property name="PreparationMode" column="Preparation" />
-    <many-to-one name="RecipeType">
+    
+    <many-to-one name="RecipeType" class="RecipeType">
       <column name="IdRecipeType" not-null="false" />
     </many-to-one>
+    
+    <property name="PreparationMode" column="Preparation" />
+    <property name="Portion" column="Portion"/>
+    <property name="PreparationTime" column="PreparationTime"/>
   </class>
 </hibernate-mapping>

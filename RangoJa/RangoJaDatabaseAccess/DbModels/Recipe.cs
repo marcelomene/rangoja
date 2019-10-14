@@ -10,24 +10,15 @@ namespace RangoJaDatabaseAccess.DbModels
     {
         public virtual int Id { get; set; }
         public virtual string Name { get; set; }
-        public virtual int CookedCounter { get; set; }
-        public virtual ICollection<Ingredient> Ingredients { get; set; }
+        public virtual ISet<Ingredient> Ingredients { get; set; }
+        public virtual ISet<Unit> UnitTypes { get; set; }
+        public virtual ISet<Amount> Amounts { get; set; }
         public virtual User User { get; set; }
         public virtual string PreparationMode { get; set; }
         public virtual RecipeType RecipeType { get; set; }
+        public virtual string Portion { get; set; }
+        public virtual string PreparationTime { get; set; }
 
-        public Recipe(int id, string name)
-        {
-            Id = id;
-            Name = name;
-        }
-
-        public Recipe(int id, string name, int cookedCounter, List<Ingredient> ingredients)
-        {
-            Id = id;
-            Name = name;
-            CookedCounter = cookedCounter;
-            Ingredients = ingredients;
-        }
+        public Recipe() { }
     }
 }

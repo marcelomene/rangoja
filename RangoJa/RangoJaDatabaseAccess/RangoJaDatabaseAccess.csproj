@@ -77,10 +77,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DbModels\Amount.cs" />
     <Compile Include="DbModels\ApplianceType.cs" />
     <Compile Include="DbModels\Ingredient.cs" />
     <Compile Include="DbModels\Recipe.cs" />
     <Compile Include="DbModels\RecipeType.cs" />
+    <Compile Include="DbModels\Unit.cs" />
     <Compile Include="DbModels\User.cs" />
     <Compile Include="NHibernate\DatabaseOperations.cs" />
     <Compile Include="NHibernate\IDatabaseOperations.cs" />
@@ -92,10 +94,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="DbModels\User.hbm.xml" />
-    <Content Include="DbModels\ApplianceType.hbm.xml" />
-    <Content Include="DbModels\Ingredient.hbm.xml" />
-    <Content Include="DbModels\Recipe.hbm.xml" />
-    <Content Include="DbModels\RecipeType.hbm.xml" />
+    <EmbeddedResource Include="DbModels\ApplianceType.hbm.xml" />
+    <EmbeddedResource Include="DbModels\Ingredient.hbm.xml" />
+    <EmbeddedResource Include="DbModels\Recipe.hbm.xml" />
+    <EmbeddedResource Include="DbModels\RecipeType.hbm.xml" />
+    <EmbeddedResource Include="DbModels\Unit.hbm.xml" />
+    <EmbeddedResource Include="DbModels\Amount.hbm.xml" />
     <Content Include="hibernate.cfg.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

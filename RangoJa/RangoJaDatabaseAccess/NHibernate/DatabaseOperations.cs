@@ -27,12 +27,12 @@ namespace RangoJaDatabaseAccess.NHibernate
         /// <param name="id"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        public T GetObject<T>(int id, T type)
+        public T GetObject<T>(int id)
         {
             ISession session = NHibernateHelper.GetSession();
             ITransaction transaction = session.BeginTransaction();
 
-            object obj = session.Get(typeof(T), id);
+            object obj = session.Get<T>(id);
             transaction.Commit();
 
             NHibernateHelper.CloseSession();

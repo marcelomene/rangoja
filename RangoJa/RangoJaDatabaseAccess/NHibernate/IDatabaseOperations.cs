@@ -22,6 +22,6 @@ namespace RangoJaDatabaseAccess.NHibernate
         /// <param name="id">Object id.</param>
         /// <param name="type">Object type.</param>
         /// <returns></returns>
-        T GetObject<T>(int id, T type);
+        T GetObject<T>(int id);
     }
 }

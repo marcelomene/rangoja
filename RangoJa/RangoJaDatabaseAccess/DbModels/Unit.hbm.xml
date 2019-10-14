@@ -3,10 +3,10 @@
                    assembly="RangoJaDatabaseAccess"
                    namespace="RangoJaDatabaseAccess.DbModels">
 
-  <class name="Ingredient" table="Ingredients">
-    <id name="Id" column="IdIngredient">
+  <class name="Unit" table="Units">
+    <id name="Id" column="IdUnitType">
       <generator class="identity" />
     </id>
-    <property name="Name" column="Ingredient" />
+    <property name="Name" column="UnitType" />
   </class>
 </hibernate-mapping>
