@@ -11,26 +11,11 @@
     
     <property name="Name" column="Name" />
     
-    <set name="Ingredients" table="Recipe_Ingredients" lazy="false">
-      <key column="IdRecipe"/>
-      <many-to-many class="Ingredient" column="IdIngredient"/>
-    </set>
-    
-    <set name="UnitTypes" table="Recipe_Ingredients" lazy="false">
-      <key column="IdRecipe"/>
-      <many-to-many class="Unit" column="IdUnitType"/>
-    </set>
-
-    <!--<set name="Amounts" table="Recipe_Ingredients" lazy="false">
-      <key column="IdRecipe"/>
-      <many-to-many class="Amount" column="Amount"/>
-    </set>-->
-
     <many-to-one name="User" class="User">
       <column name="IdUser" not-null="false" />
     </many-to-one>
     
-    <many-to-one name="RecipeType" class="RecipeType">
+    <many-to-one name="RecipeType" class="RecipeType" lazy="false">
       <column name="IdRecipeType" not-null="false" />
     </many-to-one>
     

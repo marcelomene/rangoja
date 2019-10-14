@@ -77,10 +77,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DbModels\Amount.cs" />
     <Compile Include="DbModels\ApplianceType.cs" />
     <Compile Include="DbModels\Ingredient.cs" />
+    <Compile Include="DbModels\IngredientInfo.cs" />
     <Compile Include="DbModels\Recipe.cs" />
+    <Compile Include="DbModels\RecipeInfo.cs" />
     <Compile Include="DbModels\RecipeType.cs" />
     <Compile Include="DbModels\Unit.cs" />
     <Compile Include="DbModels\User.cs" />
@@ -99,9 +100,10 @@
     <EmbeddedResource Include="DbModels\Recipe.hbm.xml" />
     <EmbeddedResource Include="DbModels\RecipeType.hbm.xml" />
     <EmbeddedResource Include="DbModels\Unit.hbm.xml" />
-    <EmbeddedResource Include="DbModels\Amount.hbm.xml" />
+    <EmbeddedResource Include="DbModels\RecipeInfo.hbm.xml" />
     <Content Include="hibernate.cfg.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup />
