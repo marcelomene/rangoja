@@ -23,7 +23,12 @@ namespace RangoJa.Views
 
         private void Entry_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            if (!string.IsNullOrEmpty(ViewModel.SearchQuery))
+            {
+                lsView.ItemsSource = ViewModel.AllIngredients.Where(x => x.Name.ToLower().StartsWith(ViewModel.SearchQuery.ToLower()));
+            }
+            else
+                lsView.ItemsSource = null;
         }
 
         private async void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)

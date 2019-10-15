@@ -66,6 +66,7 @@ namespace RanjoJaTests
         [TestMethod]
         public void MYSQLDbAccessTests()
         {
+            List<int> recipesIds = MySQLDbAccess.GetRecipesIdsThatContainsIngredients(new List<Ingredient>() { new Ingredient() { Id = 111, Name = "Limão" } });
             List<Ingredient> ingredients = MySQLDbAccess.GetAllIngredients();
             Ingredient ingredient = MySQLDbAccess.GetIngredientById(111);
             Ingredient ingredient2 = MySQLDbAccess.GetIngredientByName("Limão");
@@ -74,6 +75,7 @@ namespace RanjoJaTests
             Unit unit = MySQLDbAccess.GetUnitTypeById(1);
             List<IngredientInfo> infos = MySQLDbAccess.GetIngredientInfosFromRecipe(1);
             Recipe recipe = MySQLDbAccess.GetRecipeById(1);
+            
         }
     }
 }

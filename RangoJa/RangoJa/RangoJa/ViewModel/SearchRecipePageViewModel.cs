@@ -1,9 +1,11 @@
-﻿using RangoJaDatabaseAccess.DbModels;
+﻿using RangoJa.Views;
+using RangoJaDatabaseAccess.DbModels;
 using RangoJaDatabaseAccess.MySQL;
 using RangoJaDatabaseAccess.NHibernate;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -16,6 +18,8 @@ namespace RangoJa.ViewModel
         public ICommand SearchCommand { get; set; }
 
         public Ingredient SelectedIngredient { get; set; }
+        
+        public List<Ingredient> AllIngredients { get; set; }
 
         private ObservableCollection<Ingredient> ingredientsToSearch;
         public ObservableCollection<Ingredient> IngredientsToSearch
@@ -42,26 +46,30 @@ namespace RangoJa.ViewModel
         {
             IngredientsToSearch = new ObservableCollection<Ingredient>();
             ingredientsFound = new ObservableCollection<Ingredient>();
-            SearchCommand = new Command(() => SearchIngredient(), () => true);
+            SearchCommand = new Command(() => SearchRecipes(), () => true);
+            LoadAllIngredients();
         }
 
         public void IncludeInSearch()
         => IngredientsToSearch.Add(SelectedIngredient);
 
         public void LoadAllIngredients()
+            => AllIngredients = MySQLDbAccess.GetAllIngredients();
+
+        public void SearchRecipes()
         {
-            List<Ingredient> ingredients = MySQLDbAccess.GetAllIngredients();
-            foreach (var ing in ingredients)
-                IngredientsToSearch.Add(ing);
+            List<Ingredient> listSurrogate = new List<Ingredient>();
+            List<Recipe> recipes = new List<Recipe>();
+
+            foreach (var ing in IngredientsToSearch)
+                listSurrogate.Add(ing);
+
+            List<int> recipeIds = MySQLDbAccess.GetRecipesIdsThatContainsIngredients(listSurrogate);
+
+            foreach (var id in recipeIds.Distinct())
+                recipes.Add(MySQLDbAccess.GetRecipeById(id));
+
+            NavigationProvider.NavigateTo(new SearchResultPage(recipes));
         }
-
-        public void SearchIngredient()
-        {
-            Ingredient ingredient = MySQLDbAccess.GetIngredientByName(SearchQuery);
-            IngredientsFound.Clear();
-            IngredientsFound.Add(ingredient);
-        }
-
-
     }
 }

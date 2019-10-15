@@ -10,8 +10,16 @@
              
     <ContentPage.Content>
         <StackLayout Grid.Row="1">
+            <Image Source="AppIcon.png" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" HeightRequest="100" WidthRequest="100"/>
+            <Label Text="Resultado da pesquisa" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Margin="20"/>
+            
             <ScrollView  Orientation="Vertical" VerticalOptions="StartAndExpand">
-                <ListView HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                <ListView HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" ItemsSource="{Binding Results}" ItemSelected="ListView_ItemSelected" SelectedItem="{Binding SelectedRecipe}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextCell Text="{Binding Name}" Detail="{Binding Id}"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
                 </ListView>
             </ScrollView>
         </StackLayout>

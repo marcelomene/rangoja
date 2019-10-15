@@ -174,9 +174,28 @@ namespace RangoJaDatabaseAccess.MySQL
             return recipe;
         }
 
-        //public static List<Recipe> GetRecipesThatContains(List<Ingredient> ingredients)
-        //{
-        //    string sqlQuery = $"SELECT * FROM Recipe WHERE IdRecipe = {id}";
-        //}
+        public static List<int> GetRecipesIdsThatContainsIngredients(List<Ingredient> ingredients)
+        {
+            List<int> recipeIds = new List<int>();
+
+            string sqlQuery = $"SELECT IdRecipe FROM Recipe_Ingredients WHERE ";
+
+            for(int i = 0; i < ingredients.Count - 1; i++ )
+                sqlQuery += $"IdIngredient = {ingredients[i].Id} OR ";
+            sqlQuery += $"IdIngredient = {ingredients[ingredients.Count - 1].Id}";
+
+            Connection.Open();
+
+            MySqlCommand cmd = Connection.CreateCommand();
+            cmd.CommandText = sqlQuery;
+            MySqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+                recipeIds.Add((int)reader["IdRecipe"]);
+
+            Connection.Close();
+
+            return recipeIds;
+        }
     }
 }
