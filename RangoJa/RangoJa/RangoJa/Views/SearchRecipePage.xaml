@@ -17,12 +17,19 @@
             <StackLayout Grid.Row="1">
                 <Image Source="AppIcon.png" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" HeightRequest="100" WidthRequest="100"/>
                 <Label Text="Digite aqui os seus ingredientes disponíveis" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Margin="20"/>
-                <Entry Text="{Binding SearchQuery}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="300"/>
+                <Entry Text="{Binding SearchQuery}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="300" TextChanged="Entry_TextChanged"/>
                 <ScrollView HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-                    <ListView ItemsSource="{Binding IngredientsToSearch}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <ListView ItemsSource="{Binding IngredientsToSearch}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <TextCell Text="{Binding Name}"
+                              Detail="{Binding Id}" />
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
                 </ScrollView>
                 <!--Insert filter stuff here later-->
-                <Button Text="Buscar" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="#6FA788" Margin="10" CornerRadius="10" WidthRequest="300" HeightRequest="50"/>
+                <Button Text="Buscar" Command="{Binding SearchCommand}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="#6FA788" Margin="10" CornerRadius="10" WidthRequest="300" HeightRequest="50"/>
             </StackLayout>
         </Grid>
     </ContentPage.Content>

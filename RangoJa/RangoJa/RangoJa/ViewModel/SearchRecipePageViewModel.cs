@@ -1,4 +1,5 @@
 ﻿using RangoJaDatabaseAccess.DbModels;
+using RangoJaDatabaseAccess.NHibernate;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,9 +11,8 @@ namespace RangoJa.ViewModel
 {
     public class SearchRecipePageViewModel : BaseViewModel
     {
-        public ICommand ReturnPageCommand { get; set; }
-
         public string SearchQuery { get; set; }
+        public ICommand SearchCommand { get; set; }
 
         private ObservableCollection<Ingredient> ingredientsToSearch;
         public ObservableCollection<Ingredient> IngredientsToSearch
@@ -24,12 +24,24 @@ namespace RangoJa.ViewModel
             }
         }
 
+        public void LoadAllIngredients()
+        {
+            try
+            {
+                List<Ingredient> ingredients = new DatabaseOperations().GetAllObjects<Ingredient>() as List<Ingredient>;
+            }
+            catch (Exception e)
+            {
+
+            }
+            //foreach (var ingredient in ingredients)
+              //  IngredientsToSearch.Add(ingredient);
+        }
+
         public SearchRecipePageViewModel()
         {
-            ReturnPageCommand = new Command(
-                execute: () => NavigationProvider.NavigateBack(),
-                canExecute: () => true);
             IngredientsToSearch = new ObservableCollection<Ingredient>();
+            SearchCommand = new Command(() => LoadAllIngredients(), () => true);
         }
     }
 }

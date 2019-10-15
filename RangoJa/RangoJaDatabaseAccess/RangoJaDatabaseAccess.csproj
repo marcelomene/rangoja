@@ -79,7 +79,6 @@
   <ItemGroup>
     <Compile Include="DbModels\ApplianceType.cs" />
     <Compile Include="DbModels\Ingredient.cs" />
-    <Compile Include="DbModels\IngredientInfo.cs" />
     <Compile Include="DbModels\Recipe.cs" />
     <Compile Include="DbModels\RecipeInfo.cs" />
     <Compile Include="DbModels\RecipeType.cs" />

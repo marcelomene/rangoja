@@ -15,7 +15,6 @@ namespace RangoJaDatabaseAccess.DbModels
         public virtual RecipeType RecipeType { get; set; }
         public virtual string Portion { get; set; }
         public virtual string PreparationTime { get; set; }
-        public virtual List<IngredientInfo> Ingredients { get; set; }
         public Recipe() { }
     }
 }
