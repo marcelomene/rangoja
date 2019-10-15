@@ -1,4 +1,5 @@
 ﻿using RangoJaDatabaseAccess.DbModels;
+using RangoJaDatabaseAccess.MySQL;
 using RangoJaDatabaseAccess.NHibernate;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,8 @@ namespace RangoJa.ViewModel
         public string SearchQuery { get; set; }
         public ICommand SearchCommand { get; set; }
 
+        public Ingredient SelectedIngredient { get; set; }
+
         private ObservableCollection<Ingredient> ingredientsToSearch;
         public ObservableCollection<Ingredient> IngredientsToSearch
         {   get => ingredientsToSearch;
@@ -24,24 +27,41 @@ namespace RangoJa.ViewModel
             }
         }
 
-        public void LoadAllIngredients()
+        private ObservableCollection<Ingredient> ingredientsFound;
+        public ObservableCollection<Ingredient> IngredientsFound
         {
-            try
+            get => ingredientsFound;
+            set
             {
-                List<Ingredient> ingredients = new DatabaseOperations().GetAllObjects<Ingredient>() as List<Ingredient>;
+                ingredientsFound = value;
+                OnPropertyChanged(nameof(IngredientsFound));
             }
-            catch (Exception e)
-            {
-
-            }
-            //foreach (var ingredient in ingredients)
-              //  IngredientsToSearch.Add(ingredient);
         }
 
         public SearchRecipePageViewModel()
         {
             IngredientsToSearch = new ObservableCollection<Ingredient>();
-            SearchCommand = new Command(() => LoadAllIngredients(), () => true);
+            ingredientsFound = new ObservableCollection<Ingredient>();
+            SearchCommand = new Command(() => SearchIngredient(), () => true);
         }
+
+        public void IncludeInSearch()
+        => IngredientsToSearch.Add(SelectedIngredient);
+
+        public void LoadAllIngredients()
+        {
+            List<Ingredient> ingredients = MySQLDbAccess.GetAllIngredients();
+            foreach (var ing in ingredients)
+                IngredientsToSearch.Add(ing);
+        }
+
+        public void SearchIngredient()
+        {
+            Ingredient ingredient = MySQLDbAccess.GetIngredientByName(SearchQuery);
+            IngredientsFound.Clear();
+            IngredientsFound.Add(ingredient);
+        }
+
+
     }
 }

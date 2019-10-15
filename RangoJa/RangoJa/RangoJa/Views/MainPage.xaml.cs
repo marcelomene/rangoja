@@ -10,9 +10,12 @@ namespace RangoJa
 {
     public partial class MainPage : ContentPage
     {
+        MainPageViewModel ViewModel;
         public MainPage()
         {
             InitializeComponent();
+            ViewModel = new MainPageViewModel();
+            BindingContext = ViewModel;
         }
     }
 }

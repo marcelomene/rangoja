@@ -4,9 +4,9 @@
              x:Class="RangoJa.Views.SearchResultPage"
              xmlns:vm="clr-namespace:RangoJa.ViewModel">
 
-    <ContentPage.BindingContext>
+    <!--<ContentPage.BindingContext>
         <vm:SearchRecipePageViewModel/>
-    </ContentPage.BindingContext>
+    </ContentPage.BindingContext>-->
              
     <ContentPage.Content>
         <StackLayout Grid.Row="1">

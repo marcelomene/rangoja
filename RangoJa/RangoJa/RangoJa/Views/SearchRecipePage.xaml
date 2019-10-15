@@ -4,22 +4,17 @@
              x:Class="RangoJa.Views.SearchRecipePage"
              xmlns:vm="clr-namespace:RangoJa.ViewModel">
     
-    <ContentPage.BindingContext>
+    <!--<ContentPage.BindingContext>
         <vm:SearchRecipePageViewModel/>
-    </ContentPage.BindingContext>
+    </ContentPage.BindingContext>-->
     
     <ContentPage.Content>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <StackLayout Grid.Row="1">
+            <StackLayout>
                 <Image Source="AppIcon.png" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" HeightRequest="100" WidthRequest="100"/>
                 <Label Text="Digite aqui os seus ingredientes disponíveis" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Margin="20"/>
                 <Entry Text="{Binding SearchQuery}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="300" TextChanged="Entry_TextChanged"/>
                 <ScrollView HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-                    <ListView ItemsSource="{Binding IngredientsToSearch}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                <ListView ItemsSource="{Binding IngredientsFound}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" ItemSelected="ListView_ItemSelected" SelectedItem="{Binding SelectedIngredient}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <TextCell Text="{Binding Name}"
@@ -28,9 +23,20 @@
                         </ListView.ItemTemplate>
                     </ListView>
                 </ScrollView>
-                <!--Insert filter stuff here later-->
-                <Button Text="Buscar" Command="{Binding SearchCommand}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="#6FA788" Margin="10" CornerRadius="10" WidthRequest="300" HeightRequest="50"/>
+                <Label Text="Ingredientes selecionados" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" />
+                <ScrollView HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                    <ListView ItemsSource="{Binding IngredientsToSearch}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" >
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <TextCell Text="{Binding Name}"
+                                  Detail="{Binding Id}" />
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </ScrollView>
+            <!--Insert filter stuff here later-->
+            <Button Text="Buscar ingrediente" Command="{Binding SearchCommand}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="#6FA788" Margin="10" CornerRadius="10" WidthRequest="300" HeightRequest="50"/>
+            <Button Text="Buscar receita" Command="{Binding SearchCommand}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="#6FA788" Margin="10" CornerRadius="10" WidthRequest="300" HeightRequest="50"/>
             </StackLayout>
-        </Grid>
     </ContentPage.Content>
 </ContentPage>

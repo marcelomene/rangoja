@@ -7,9 +7,9 @@
              BackgroundColor="White"
              xmlns:vm="clr-namespace:RangoJa.ViewModel">
     
-    <ContentPage.BindingContext>
+    <!--<ContentPage.BindingContext>
         <vm:MainPageViewModel/>
-    </ContentPage.BindingContext>
+    </ContentPage.BindingContext>-->
     
     <Grid>
         <Grid.RowDefinitions>
