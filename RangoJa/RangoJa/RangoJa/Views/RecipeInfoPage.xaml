@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RangoJa.Views.RecipeInfoPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Image Source="AppIcon.png" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" HeightRequest="100" WidthRequest="100"/>
+            
+            <Label Text="{Binding CurrentRecipe.Name}" FontSize="Medium" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Margin="20"/>
+            
+            <Label Text="{Binding IngredientsText}" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" Margin="20"/>
+            
+            <Label Text="Modo de preparo:" FontSize="Medium" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Margin="20"/>
+
+            <Label Text="{Binding CurrentRecipe.PreparationMode}" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" Margin="20"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
