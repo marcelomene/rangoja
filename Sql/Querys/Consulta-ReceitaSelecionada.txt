@@ -1,0 +1,7 @@
+SELECT Recipe.Name, Recipe.Preparation, Recipe.Portion, Recipe.PreparationTime, Recipe_Ingredients.IdIngredient, Ingredients.Ingredient, Recipe_Ingredients.Amount, Units.IdUnitType, Units.UnitType, Appliance_Type.IdApplianceType, Appliance_Type.Type
+FROM Recipe 
+INNER JOIN Recipe_Ingredients ON (Recipe_Ingredients.IdRecipe = Recipe.IdRecipe)
+INNER JOIN Units ON (Recipe_Ingredients.IdUnitType = Units.IdUnitType)
+INNER JOIN Ingredients ON (Recipe_Ingredients.IdIngredient = Ingredients.IdIngredient)
+INNER JOIN Appliance_Type ON (Appliance_Type.IdApplianceType = Recipe.IdApplianceType)
+WHERE Recipe.IdRecipe = 1
