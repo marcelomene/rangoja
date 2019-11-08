@@ -9,16 +9,16 @@
     </ContentPage.BindingContext>-->
     
     <ContentPage.Content>
-            <StackLayout>
-                
-                <Image Source="AppIcon.png" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" HeightRequest="100" WidthRequest="100"/>
+        <StackLayout>
+            <ActivityIndicator IsVisible="{Binding IsLoading}" IsRunning="{Binding IsLoading}" Color="Orange"  VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+            <Image Source="AppIcon.png" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" HeightRequest="100" WidthRequest="100"/>
                 <Label Text="Digite aqui os seus ingredientes disponíveis" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Margin="20"/>
 
                 <Entry Text="{Binding SearchQuery}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="300" TextChanged="Entry_TextChanged"/>
                 <ListView x:Name="lsView" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" ItemSelected="ListView_ItemSelected" SelectedItem="{Binding SelectedIngredient}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <TextCell Text="{Binding Name}" Detail="{Binding Id}" />
+                            <TextCell Text="{Binding Name}" />
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
@@ -27,7 +27,7 @@
                 <ListView ItemsSource="{Binding IngredientsToSearch}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" >
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <TextCell Text="{Binding Name}" Detail="{Binding Id}" />
+                            <TextCell Text="{Binding Name}" />
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>

@@ -149,8 +149,15 @@ namespace RangoJaDatabaseAccess.MySQL
 
         public static Recipe GetRecipeById(int id)
         {
-            string sqlQuery = $"SELECT * FROM Recipe WHERE IdRecipe = {id}";
-            
+            string sqlQuery = "SELECT Recipe.Name, Recipe.Preparation, Recipe.Portion, Recipe.PreparationTime, Recipe.IdRecipeType, " +
+                "Recipe_Type.Type, Recipe_Ingredients.IdIngredient, Ingredients.Ingredient, Recipe_Ingredients.Amount, " +
+                "Units.IdUnitType, Units.UnitType, Appliance_Type.IdApplianceType, Appliance_Type.Type FROM Recipe " +
+                "INNER JOIN Recipe_Ingredients ON(Recipe_Ingredients.IdRecipe = Recipe.IdRecipe) " +
+                "INNER JOIN Units ON(Recipe_Ingredients.IdUnitType = Units.IdUnitType) " +
+                "INNER JOIN Ingredients ON(Recipe_Ingredients.IdIngredient = Ingredients.IdIngredient) " +
+                "INNER JOIN Appliance_Type ON(Appliance_Type.IdApplianceType = Recipe.IdApplianceType) " +
+               $"INNER JOIN Recipe_Type ON(Recipe_Type.IdRecipeType = Recipe.IdRecipeType) WHERE Recipe.IdRecipe = {id}";
+
             Connection.Open();
 
             MySqlCommand cmd = Connection.CreateCommand();
@@ -158,19 +165,20 @@ namespace RangoJaDatabaseAccess.MySQL
             MySqlDataReader reader = cmd.ExecuteReader();
 
             reader.Read();
-            Recipe recipe = new Recipe() { Id = (int)reader["IdRecipe"],
+            Recipe recipe = new Recipe() { Id = id,
                 Name = (string)reader["Name"], Portion = (string)reader["Portion"],
                 PreparationMode = (string)reader["Preparation"], PreparationTime = (string)reader["PreparationTime"],
+                RecipeType = new RecipeType((int)reader["IdRecipeType"], (string)reader["Type"])
             };
 
-            int idUser = (int)reader["IdUser"];
-            int idRecipeType = (int)reader["IdRecipeType"];
+            recipe.Ingredients.Add(new IngredientInfo(new Ingredient((int)reader["IdIngredient"], (string)reader["Ingredient"]), //Primeiro ingrediente
+                    new Unit((int)reader["IdUnitType"], (string)reader["UnitType"]), (string)reader["Amount"]));
+
+            while (reader.Read()) //Restante dos ingredientes
+                recipe.Ingredients.Add(new IngredientInfo(new Ingredient((int)reader["IdIngredient"], (string)reader["Ingredient"]),
+                    new Unit((int)reader["IdUnitType"], (string)reader["UnitType"]), (string)reader["Amount"]));
 
             Connection.Close();
-
-            recipe.User = GetUserById(idUser);
-            recipe.RecipeType = GetRecipeTypeById(idRecipeType);
-            recipe.Ingredients = GetIngredientInfosFromRecipe(recipe.Id);
             return recipe;
         }
 
@@ -178,11 +186,15 @@ namespace RangoJaDatabaseAccess.MySQL
         {
             List<int> recipeIds = new List<int>();
 
-            string sqlQuery = $"SELECT IdRecipe FROM Recipe_Ingredients WHERE ";
+            string sqlQuery = $"SELECT IdRecipe FROM Recipe_Ingredients";
+            string sqlWhere = " WHERE IdIngredient IN";
+            string sqlIN = string.Empty;
 
-            for(int i = 0; i < ingredients.Count - 1; i++ )
-                sqlQuery += $"IdIngredient = {ingredients[i].Id} OR ";
-            sqlQuery += $"IdIngredient = {ingredients[ingredients.Count - 1].Id}";
+            for (int i = 0; i < ingredients.Count; i++)
+                sqlIN += $"{ingredients[i].Id},";
+
+            sqlQuery += sqlWhere + "(" + sqlIN.Remove(sqlIN.Length - 1, 1) + ")";
+            sqlQuery += " group by IdRecipe";
 
             Connection.Open();
 

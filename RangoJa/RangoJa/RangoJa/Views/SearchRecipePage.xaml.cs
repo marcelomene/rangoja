@@ -33,7 +33,7 @@ namespace RangoJa.Views
 
         private async void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            bool include = await DisplayAlert("Aviso", "Incluir esta receita na busca?", "Sim", "Não");
+            bool include = await DisplayAlert("Aviso", "Incluir este ingrediente na busca?", "Sim", "Não");
             if (include)
                 ViewModel.IncludeInSearch();
         }

@@ -20,7 +20,10 @@ namespace RangoJa.ViewModel
         {
             foreach(var ing in CurrentRecipe.Ingredients)
             {
-                IngredientsText += $"{ing.Amount}{ing.Unit.Name} {ing.Ingredient.Name}\n";
+                if(ing.Unit.Name.Contains("gosto"))
+                    IngredientsText += $"{ing.Ingredient.Name} a gosto.\n";
+                else
+                    IngredientsText += $"{ing.Amount}{ing.Unit.Name} {ing.Ingredient.Name}\n";
             }
             OnPropertyChanged(nameof(IngredientsText));
             OnPropertyChanged(nameof(CurrentRecipe));

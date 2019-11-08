@@ -21,6 +21,17 @@ namespace RangoJa.ViewModel
         
         public List<Ingredient> AllIngredients { get; set; }
 
+        private bool isLoading { get; set; }
+        public bool IsLoading
+        {
+            get => isLoading;
+            set
+            {
+                isLoading = value;
+                OnPropertyChanged(nameof(IsLoading));
+            }
+        }
+
         private ObservableCollection<Ingredient> ingredientsToSearch;
         public ObservableCollection<Ingredient> IngredientsToSearch
         {   get => ingredientsToSearch;
@@ -51,10 +62,17 @@ namespace RangoJa.ViewModel
         }
 
         public void IncludeInSearch()
-        => IngredientsToSearch.Add(SelectedIngredient);
+        {
+            IngredientsToSearch.Add(SelectedIngredient);
+            SearchQuery = string.Empty;
+        }
 
         public void LoadAllIngredients()
-            => AllIngredients = MySQLDbAccess.GetAllIngredients();
+        {
+            IsLoading = true;
+            AllIngredients = MySQLDbAccess.GetAllIngredients();
+            IsLoading = false;
+        }
 
         public void SearchRecipes()
         {
