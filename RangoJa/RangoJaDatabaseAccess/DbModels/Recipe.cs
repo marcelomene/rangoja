@@ -13,6 +13,7 @@ namespace RangoJaDatabaseAccess.DbModels
         public virtual User User { get; set; }
         public virtual string PreparationMode { get; set; }
         public virtual RecipeType RecipeType { get; set; }
+        public virtual ApplianceType Appliance { get; set; }
         public virtual string Portion { get; set; }
         public virtual string PreparationTime { get; set; }
         public virtual List<IngredientInfo> Ingredients { get; set; }

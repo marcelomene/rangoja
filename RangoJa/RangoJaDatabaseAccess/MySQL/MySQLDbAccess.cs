@@ -23,6 +23,8 @@ namespace RangoJaDatabaseAccess.MySQL
             { }
         }
 
+        #region GETS
+
         public static List<Ingredient> GetAllIngredients()
         {
             List<Ingredient> ingredients = new List<Ingredient>();
@@ -151,7 +153,7 @@ namespace RangoJaDatabaseAccess.MySQL
         {
             string sqlQuery = "SELECT Recipe.Name, Recipe.Preparation, Recipe.Portion, Recipe.PreparationTime, Recipe.IdRecipeType, " +
                 "Recipe_Type.Type, Recipe_Ingredients.IdIngredient, Ingredients.Ingredient, Recipe_Ingredients.Amount, " +
-                "Units.IdUnitType, Units.UnitType, Appliance_Type.IdApplianceType, Appliance_Type.Type FROM Recipe " +
+                "Units.IdUnitType, Units.UnitType, Appliance_Type.IdApplianceType, Appliance_Type.ApplianceName FROM Recipe " +
                 "INNER JOIN Recipe_Ingredients ON(Recipe_Ingredients.IdRecipe = Recipe.IdRecipe) " +
                 "INNER JOIN Units ON(Recipe_Ingredients.IdUnitType = Units.IdUnitType) " +
                 "INNER JOIN Ingredients ON(Recipe_Ingredients.IdIngredient = Ingredients.IdIngredient) " +
@@ -168,7 +170,8 @@ namespace RangoJaDatabaseAccess.MySQL
             Recipe recipe = new Recipe() { Id = id,
                 Name = (string)reader["Name"], Portion = (string)reader["Portion"],
                 PreparationMode = (string)reader["Preparation"], PreparationTime = (string)reader["PreparationTime"],
-                RecipeType = new RecipeType((int)reader["IdRecipeType"], (string)reader["Type"])
+                RecipeType = new RecipeType((int)reader["IdRecipeType"], (string)reader["Type"]),
+                Appliance = new ApplianceType((int)reader["IdApplianceType"], (string)reader["ApplianceName"])
             };
 
             recipe.Ingredients.Add(new IngredientInfo(new Ingredient((int)reader["IdIngredient"], (string)reader["Ingredient"]), //Primeiro ingrediente
@@ -209,5 +212,71 @@ namespace RangoJaDatabaseAccess.MySQL
 
             return recipeIds;
         }
+
+        public static List<ApplianceType> GetAllApplianceTypes()
+        {
+            List<ApplianceType> appliances = new List<ApplianceType>();
+            string sqlQuery = "SELECT * FROM Appliance_Type";
+            Connection.Open();
+
+            MySqlCommand cmd = Connection.CreateCommand();
+            cmd.CommandText = sqlQuery;
+            MySqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+                appliances.Add(new ApplianceType() { Id = (int)reader["IdApplianceType"], Name = (string)reader["ApplianceName"] });
+
+            Connection.Close();
+            return appliances;
+        }
+
+        #endregion
+
+        #region INSERTION
+        public static void InsertRecipe(Recipe recipe)
+        {
+
+            //INSERT INTO `Recipe` (`IdRecipe`, `IdUser`, `Name`, `Preparation`, `Image`, `IdRecipeType`, `Portion`, `PreparationTime`, `IdApplianceType`) VALUES(NULL, '2', 'Lasanha de carne',
+
+            //First, we insert the recipe's info in the Recipe table
+            string insertRecipeSQL = $"INSERT INTO Recipe (IdRecipe, IdUser, Name, Preparation, Image, " +
+                $"IdRecipeType, Portion, PreparationTime, IdApplianceType) VALUES (" +
+                $"NULL, 2, \"{recipe.Name}\", \"{recipe.PreparationMode}\", NULL, {recipe.RecipeType.Id}, \"{recipe.Portion}\"," +
+                $"\"{recipe.PreparationTime}\", {recipe.Appliance.Id})";
+
+            Connection.Open();
+
+            MySqlCommand cmd = Connection.CreateCommand();
+            cmd.CommandText = insertRecipeSQL;
+            cmd.ExecuteNonQuery();
+
+            //Now, we need the id from the last
+            MySqlCommand cmd2 = Connection.CreateCommand();
+            cmd2.CommandText = "SELECT Recipe.IdRecipe FROM Recipe ORDER BY Recipe.IdRecipe DESC LIMIT 1";
+            MySqlDataReader reader = cmd2.ExecuteReader();
+
+            reader.Read();
+            recipe.Id = (int)reader["IdRecipe"];
+            reader.Close();
+
+            //Now, we insert all the ingredients in the Recipe_Ingredients table
+            string insertIngredientsSQL = $"INSERT INTO Recipe_Ingredients (IdRecipeIngredients, " +
+                $"IdRecipe, IdIngredient, IdUnitType, Amount) VALUES ";
+
+            string rowSql = string.Empty;
+
+            foreach (var ing in recipe.Ingredients)
+                rowSql += $"(NULL, {recipe.Id}, {ing.Ingredient.Id}, {ing.Unit.Id}, \"{ing.Amount}\"),";
+            rowSql = rowSql.Remove(rowSql.Length - 1, 1);
+
+            insertIngredientsSQL += rowSql;
+
+            MySqlCommand cmd3 = Connection.CreateCommand();
+            cmd3.CommandText = insertIngredientsSQL;
+            cmd3.ExecuteNonQuery();
+
+            Connection.Close();
+        }
+        #endregion
     }
 }

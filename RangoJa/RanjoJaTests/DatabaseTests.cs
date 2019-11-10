@@ -64,13 +64,33 @@ namespace RanjoJaTests
         }
 
         [TestMethod]
+        public void InsertRecipeTest()
+        {
+            Recipe recipe = new Recipe();
+            recipe.Name = "Mousse de maracujá";
+            recipe.PreparationMode = "Em um liquidificador, bata o creme de leite, o " +
+                "leite condensado e o suco concentrado de maracujá." +
+                "Em uma tigela, despeje a mistura e leve à geladeira por, no mínimo, 4 horas.";
+            recipe.PreparationTime = "5 minutos";
+            recipe.RecipeType = new RecipeType(1, "Regular");
+            recipe.Portion = "6 porções";
+            recipe.Appliance = new ApplianceType(12, "Liquidificador");
+            recipe.Ingredients = new List<IngredientInfo>()
+            {
+                new IngredientInfo(new Ingredient(313, "Suco de maracujá"), new Unit(3, "ml"), "350"),
+                new IngredientInfo(new Ingredient(311, "Leite condensado"), new Unit(10, "xícara"), "1"),
+                new IngredientInfo(new Ingredient(312, "Creme de leite"), new Unit(10, "xícara"), "1"),
+            };
+            MySQLDbAccess.InsertRecipe(recipe);
+        }
+
+        [TestMethod]
         public void MYSQLDbAccessTests()
         {
-
+            List<ApplianceType> appliances = MySQLDbAccess.GetAllApplianceTypes();
             Recipe recipe = MySQLDbAccess.GetRecipeById(2);
+            
             List<int> recipesIds = MySQLDbAccess.GetRecipesIdsThatContainsIngredients(new List<Ingredient>() { new Ingredient() { Id = 24, Name = "Banana" } });
-
-
             List<Ingredient> ingredients = MySQLDbAccess.GetAllIngredients();
             Ingredient ingredient = MySQLDbAccess.GetIngredientById(111);
             Ingredient ingredient2 = MySQLDbAccess.GetIngredientByName("Limão");
