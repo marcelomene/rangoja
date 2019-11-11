@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using RangoJa.Views;
 using Xamarin.Forms;
 
 namespace RangoJa
@@ -12,5 +13,7 @@ namespace RangoJa
 
         public static async void NavigateBack()
             => await App.Current.MainPage.Navigation.PopAsync();
+
+    
     }
 }

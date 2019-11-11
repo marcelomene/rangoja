@@ -18,7 +18,7 @@
     <PackageReference Include="MySqlConnector" Version="0.59.2" />
     <PackageReference Include="NHibernate" Version="5.2.6" />
     <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.3" />
-    <PackageReference Include="Xamarin.Forms" Version="3.4.0.1008975" />
+    <PackageReference Include="Xamarin.Forms" Version="4.3.0.947036" />
     <PackageReference Include="Xamarin.HotReload" Version="1.4.15" />
   </ItemGroup>
 
@@ -44,6 +44,9 @@
     <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\IngredientsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\RecipeInfoPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>

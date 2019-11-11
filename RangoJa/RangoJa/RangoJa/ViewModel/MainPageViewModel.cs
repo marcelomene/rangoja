@@ -11,11 +11,19 @@ namespace RangoJa.ViewModel
     {
         public ICommand GoToSearchRecipeCommand { get; set; }
 
+        public ICommand GoToIngredientsCommand { get; set; }
+
         public MainPageViewModel()
         {
             GoToSearchRecipeCommand = new Command(
-                execute: () => NavigationProvider.NavigateTo(new SearchRecipePage()), 
+                execute: () => NavigationProvider.NavigateTo(new SearchRecipePage()),
+                canExecute: () => true);
+
+            GoToIngredientsCommand = new Command(
+                 execute: () => NavigationProvider.NavigateTo(new IngredientsPage()),
                 canExecute: () => true);
         }
+
+      
     }
 }

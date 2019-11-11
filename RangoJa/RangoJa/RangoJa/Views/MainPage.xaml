@@ -22,7 +22,7 @@
         <StackLayout Grid.Row="1" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
             <Button Text="Buscar receitas" Command="{Binding GoToSearchRecipeCommand}" BackgroundColor="#6FA788" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="300" HeightRequest="50" CornerRadius="10"/>
             <Label Margin="20,40,0,0" HorizontalOptions="Center" VerticalOptions="Center">Ou nos ajude a te ajudar</Label>
-            <Button Text="Adicionar receitas" BackgroundColor="#6FA788" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="300" HeightRequest="50" CornerRadius="10"/>
+            <Button Text="Adicionar receitas" Command="{Binding GoToIngredientsCommand}" BackgroundColor="#6FA788" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="300" HeightRequest="50" CornerRadius="10"/>
         </StackLayout>
     </Grid>
 </ContentPage>

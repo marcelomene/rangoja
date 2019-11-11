@@ -17,5 +17,10 @@ namespace RangoJa
             ViewModel = new MainPageViewModel();
             BindingContext = ViewModel;
         }
+
+
     }
+
+    
+
 }

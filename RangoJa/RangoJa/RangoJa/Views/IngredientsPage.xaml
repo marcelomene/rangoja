@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RangoJa.Views.IngredientsPage"
+             xmlns:vm="clr-namespace:RangoJa.ViewModel"
+            >
+
+    <!--<ContentPage.BindingContext>
+        <vm:IngredientsPageViewModel/>
+    </ContentPage.BindingContext>-->
+    
+        <ContentPage.Content>
+        <ScrollView>
+        <StackLayout>
+            <ActivityIndicator IsVisible="{Binding IsLoading}" IsRunning="{Binding IsLoading}" Color="Orange"  VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+            <Image Source="AppIcon.png" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" HeightRequest="100" WidthRequest="100"/>
+            <Label Text="Digite aqui os seus ingredientes disponíveis" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Margin="20"/>
+
+            <Entry x:Name="Ingrediente" Placeholder="Ingrediente" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="300" />
+
+            <AbsoluteLayout>
+                    <Entry x:Name="Quantidade" Placeholder="Quantidade" Keyboard="Numeric" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="200" Margin="42,0,0,0"/>
+                <Picker x:Name="PickerQuantidade"
+                    SelectedIndexChanged="PickerQuantidade_SelectedIndexChanged" Margin="242,0,0,0" WidthRequest="100" Title="Tipo"
+                    ></Picker>
+            </AbsoluteLayout>
+                <!-- A two-state CheckBox. -->
+
+
+                <Button Text="adicionar ingrediente"  HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="#6FA788" Margin="10" CornerRadius="10" WidthRequest="300" HeightRequest="50"/>
+             
+
+
+                <Label Text="Ingredientes selecionados" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" />
+            <ListView ItemsSource="{Binding IngredientsToSearch}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" HeightRequest="100">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding Name}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="50" />
+                    </Grid.ColumnDefinitions>
+                    <CheckBox x:Name="fogao" Grid.Row="0" Grid.Column="0"/>
+                    <Label Text="Fogão" Grid.Row="0" Grid.Column="1" VerticalTextAlignment="Center" />
+                    <CheckBox x:Name="microondas" Grid.Row="1" Grid.Column="0"/>
+                    <Label Text="Micro-Ondas" Grid.Row="1" Grid.Column="1" VerticalTextAlignment="Center" />
+                    <CheckBox x:Name="vegano" Grid.Row="0" Grid.Column="3"/>
+                    <Label Text="Vegano" Grid.Row="0" Grid.Column="4" VerticalTextAlignment="Center" Margin="-50,0,0,0"/>
+                    <CheckBox x:Name="vegetariano" Grid.Row="1" Grid.Column="3"/>
+                    <Label Text="Vegetariano" Grid.Row="1" Grid.Column="4" VerticalTextAlignment="Center" Margin="-50,0,0,0"/>
+
+                </Grid>
+
+                <Entry x:Name="TempoPreparo" Placeholder="Tempo de preparo" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="300" />
+                <Entry x:Name="Porcao" Placeholder="Porção" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="300" />
+                <Frame BorderColor="Gray" CornerRadius="6" HeightRequest="100" WidthRequest="200">
+                    <StackLayout>
+                        <Label Text="Modo de preparo"
+                         FontSize="20"
+                             FontAttributes="Bold" />
+                        <Entry x:Name="ModoPreparo" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="400" />
+                    </StackLayout>
+                </Frame>
+
+
+                <!--Insert filter stuff here later-->
+            <Button Text="Buscar receita" Command="{Binding SearchCommand}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="#6FA788" Margin="10" CornerRadius="10" WidthRequest="300" HeightRequest="50"/>
+        </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
