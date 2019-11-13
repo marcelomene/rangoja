@@ -87,6 +87,7 @@ namespace RanjoJaTests
         [TestMethod]
         public void MYSQLDbAccessTests()
         {
+            List<Unit> units = MySQLDbAccess.GetAllUnits();
             List<ApplianceType> appliances = MySQLDbAccess.GetAllApplianceTypes();
             Recipe recipe = MySQLDbAccess.GetRecipeById(2);
             

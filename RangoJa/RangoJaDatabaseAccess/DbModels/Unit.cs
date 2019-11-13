@@ -13,6 +13,9 @@ namespace RangoJaDatabaseAccess.DbModels
         
         public Unit() { }
 
+        public Unit(string name)
+            => Name = name;
+
         public Unit(int id, string name)
         {
             Id = id;

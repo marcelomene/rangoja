@@ -230,19 +230,52 @@ namespace RangoJaDatabaseAccess.MySQL
             return appliances;
         }
 
+        public static List<Unit> GetAllUnits()
+        {
+            List<Unit> units = new List<Unit>();
+            string sqlQuery = "SELECT * FROM Units";
+            Connection.Open();
+
+            MySqlCommand cmd = Connection.CreateCommand();
+            cmd.CommandText = sqlQuery;
+            MySqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+                units.Add(new Unit() { Id = (int)reader["IdUnitType"], Name = (string)reader["UnitType"] });
+
+            Connection.Close();
+            return units;
+        }
+
+        public static List<RecipeType> GetAllRecipeTypes()
+        {
+            List<RecipeType> recipeTypes = new List<RecipeType>();
+            string sqlQuery = "SELECT * FROM Recipe_Type";
+            Connection.Open();
+
+            MySqlCommand cmd = Connection.CreateCommand();
+            cmd.CommandText = sqlQuery;
+            MySqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+                recipeTypes.Add(new RecipeType() { Id = (int)reader["IdRecipeType"], Name = (string)reader["Type"] });
+
+            Connection.Close();
+            return recipeTypes;
+        }
+
         #endregion
 
         #region INSERTION
         public static void InsertRecipe(Recipe recipe)
         {
-
-            //INSERT INTO `Recipe` (`IdRecipe`, `IdUser`, `Name`, `Preparation`, `Image`, `IdRecipeType`, `Portion`, `PreparationTime`, `IdApplianceType`) VALUES(NULL, '2', 'Lasanha de carne',
+            string _null = "NULL";
 
             //First, we insert the recipe's info in the Recipe table
             string insertRecipeSQL = $"INSERT INTO Recipe (IdRecipe, IdUser, Name, Preparation, Image, " +
                 $"IdRecipeType, Portion, PreparationTime, IdApplianceType) VALUES (" +
-                $"NULL, 2, \"{recipe.Name}\", \"{recipe.PreparationMode}\", NULL, {recipe.RecipeType.Id}, \"{recipe.Portion}\"," +
-                $"\"{recipe.PreparationTime}\", {recipe.Appliance.Id})";
+                $"NULL, 2, \"{recipe.Name}\", \"{recipe.PreparationMode}\", NULL, {(recipe.RecipeType != null ? recipe.RecipeType.Id.ToString() : _null) }, \"{recipe.Portion}\"," +
+                $"\"{recipe.PreparationTime}\", {(recipe.Appliance != null ? recipe.Appliance.Id.ToString() : _null)})";
 
             Connection.Open();
 

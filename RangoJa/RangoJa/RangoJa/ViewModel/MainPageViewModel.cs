@@ -20,7 +20,7 @@ namespace RangoJa.ViewModel
                 canExecute: () => true);
 
             GoToIngredientsCommand = new Command(
-                 execute: () => NavigationProvider.NavigateTo(new IngredientsPage()),
+                 execute: () => NavigationProvider.NavigateTo(new InsertRecipePage()),
                 canExecute: () => true);
         }
 
