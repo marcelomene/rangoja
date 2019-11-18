@@ -3,72 +3,77 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="RangoJa.Views.InsertRecipePage"
              xmlns:vm="clr-namespace:RangoJa.ViewModel"
-            >
+             xmlns:local="clr-namespace:RangoJa.Convertes">
 
-    <!--<ContentPage.BindingContext>
-        <vm:IngredientsPageViewModel/>
-    </ContentPage.BindingContext>-->
-    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:InverseBooleanConverter x:Key="boolInverse"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <ContentPage.Content>
         <ScrollView>
             <StackLayout>
-                <ActivityIndicator IsVisible="{Binding IsLoading}" IsRunning="{Binding IsLoading}" Color="Orange"  VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
-                <Image Source="AppIcon.png" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" HeightRequest="100" WidthRequest="100"/>
-                <Label Text="Digite aqui os seus ingredientes disponíveis" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Margin="20"/>
-                
-                <Entry Placeholder="Nome da receita" Text="{Binding RecipeToAdd.Name}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="300" />
+                <StackLayout IsVisible="{Binding IsLoading}">
+                    <ActivityIndicator IsVisible="True" IsRunning="True"  Color="Orange"  VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+                    <Label Text="Carregando..."/>
+                </StackLayout>
+                <StackLayout IsVisible="{Binding IsLoading, Converter={StaticResource boolInverse}}">
+                    <Image Source="AppIcon.png" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" HeightRequest="100" WidthRequest="100"/>
+                    <Label Text="Digite aqui os seus ingredientes disponíveis" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Margin="20"/>
+                    <Entry Placeholder="Nome da receita" Text="{Binding RecipeToAdd.Name}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="300" />
+                    <Entry x:Name="Ingrediente" Text="{Binding SearchQuery}" Placeholder="Ingrediente" TextChanged="Ingrediente_TextChanged" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="300" />
+                    <ListView x:Name="lsView" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" ItemSelected="ListView_ItemSelected" SelectedItem="{Binding SelectedIngredient}" HeightRequest="100">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <TextCell Text="{Binding Name}" />
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
 
-                <Entry x:Name="Ingrediente" Text="{Binding SearchQuery}" Placeholder="Ingrediente" TextChanged="Ingrediente_TextChanged" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="300" />
-                <ListView x:Name="lsView" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" ItemSelected="ListView_ItemSelected" SelectedItem="{Binding SelectedIngredient}" HeightRequest="100">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <TextCell Text="{Binding Name}" />
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                    <AbsoluteLayout>
+                        <Entry x:Name="Quantidade" Placeholder="Quantidade" Text="{Binding Amount}" Keyboard="Numeric" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="200" Margin="42,0,0,0"/>
+                        <Picker x:Name="PickerQuantidade" SelectedItem="{Binding UnitType}" Margin="242,0,0,0" WidthRequest="100" Title="Tipo"></Picker>
+                    </AbsoluteLayout>
 
-                <AbsoluteLayout>
-                    <Entry x:Name="Quantidade" Placeholder="Quantidade" Text="{Binding Amount}" Keyboard="Numeric" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="200" Margin="42,0,0,0"/>
-                    <Picker x:Name="PickerQuantidade" SelectedItem="{Binding UnitType}" Margin="242,0,0,0" WidthRequest="100" Title="Tipo"></Picker>
-                </AbsoluteLayout>
-            
-                <Label Text="Ingredientes selecionados" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" />
-                <ListView ItemsSource="{Binding IngredientsToSearch}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" HeightRequest="100">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <TextCell Text="{Binding Path=Ingredient.Name}" />
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                    <Label Text="Ingredientes selecionados" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" />
+                    <ListView ItemsSource="{Binding IngredientsToSearch}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" HeightRequest="100">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <TextCell Text="{Binding Path=Ingredient.Name}" />
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
 
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="40" />
-                        <ColumnDefinition Width="50" />
-                    </Grid.ColumnDefinitions>
-                    <CheckBox x:Name="fogao" Grid.Row="0" Grid.Column="0" IsChecked="{Binding IsStove}"/>
-                    <Label Text="Fogão" Grid.Row="0" Grid.Column="1" VerticalTextAlignment="Center" />
-                    <CheckBox x:Name="microondas" Grid.Row="1" Grid.Column="0" IsChecked="{Binding IsMicrowave}"/>
-                    <Label Text="Micro-Ondas" Grid.Row="1" Grid.Column="1" VerticalTextAlignment="Center" />
-                    <CheckBox x:Name="vegano" Grid.Row="0" Grid.Column="3" IsChecked="{Binding IsVegan}"/>
-                    <Label Text="Vegano" Grid.Row="0" Grid.Column="4" VerticalTextAlignment="Center" Margin="-50,0,0,0"/>
-                    <CheckBox x:Name="vegetariano" Grid.Row="1" Grid.Column="3" IsChecked="{Binding IsVegetarian}" />
-                    <Label Text="Vegetariano" Grid.Row="1" Grid.Column="4" VerticalTextAlignment="Center" Margin="-50,0,0,0" />
-                </Grid>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="50" />
+                        </Grid.ColumnDefinitions>
+                        <CheckBox x:Name="fogao" Grid.Row="0" Grid.Column="0" IsChecked="{Binding IsStove}"/>
+                        <Label Text="Fogão" Grid.Row="0" Grid.Column="1" VerticalTextAlignment="Center" />
+                        <CheckBox x:Name="microondas" Grid.Row="1" Grid.Column="0" IsChecked="{Binding IsMicrowave}"/>
+                        <Label Text="Micro-Ondas" Grid.Row="1" Grid.Column="1" VerticalTextAlignment="Center" />
+                        <CheckBox x:Name="vegano" Grid.Row="0" Grid.Column="3" IsChecked="{Binding IsVegan}"/>
+                        <Label Text="Vegano" Grid.Row="0" Grid.Column="4" VerticalTextAlignment="Center" Margin="-50,0,0,0"/>
+                        <CheckBox x:Name="vegetariano" Grid.Row="1" Grid.Column="3" IsChecked="{Binding IsVegetarian}" />
+                        <Label Text="Vegetariano" Grid.Row="1" Grid.Column="4" VerticalTextAlignment="Center" Margin="-50,0,0,0" />
+                    </Grid>
 
-                <Entry x:Name="TempoPreparo" Placeholder="Tempo de preparo" Text="{Binding RecipeToAdd.PreparationTime}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="300" />
-                <Entry x:Name="Porcao" Placeholder="Porção" Text="{Binding RecipeToAdd.Portion}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="300" />
-                <Frame BorderColor="Gray" CornerRadius="6" HeightRequest="100" WidthRequest="200">
-                    <StackLayout>
-                        <Label Text="Modo de preparo" FontSize="20" FontAttributes="Bold" />
-                        <Entry x:Name="ModoPreparo" Text="{Binding RecipeToAdd.PreparationMode}"  HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="400"/>
-                    </StackLayout>
-                </Frame>
-                <Button Text="Inserir receita" Command="{Binding InsertRecipeCommand}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="#6FA788" Margin="10" CornerRadius="10" WidthRequest="300" HeightRequest="50"/>
+                    <Entry x:Name="TempoPreparo" Placeholder="Tempo de preparo" Text="{Binding RecipeToAdd.PreparationTime}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="300" />
+                    <Entry x:Name="Porcao" Placeholder="Porção" Text="{Binding RecipeToAdd.Portion}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="300" />
+                    <Frame BorderColor="Gray" CornerRadius="6" HeightRequest="100" WidthRequest="200">
+                        <StackLayout>
+                            <Label Text="Modo de preparo" FontSize="20" FontAttributes="Bold" />
+                            <Entry x:Name="ModoPreparo" Text="{Binding RecipeToAdd.PreparationMode}"  HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="400"/>
+                        </StackLayout>
+                    </Frame>
+                    <Button Text="Inserir receita" Command="{Binding InsertRecipeCommand}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="#6FA788" Margin="10" CornerRadius="10" WidthRequest="300" HeightRequest="50"/>
+                </StackLayout>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

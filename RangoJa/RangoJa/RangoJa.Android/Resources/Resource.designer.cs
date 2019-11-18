@@ -6221,8 +6221,8 @@ namespace RangoJa.Droid
 			// aapt resource value: 0x7f08016f
 			public const int Animation_Design_BottomSheetDialog = 2131231087;
 			
-			// aapt resource value: 0x7f080192
-			public const int AppCompatDialogStyle = 2131231122;
+			// aapt resource value: 0x7f080193
+			public const int AppCompatDialogStyle = 2131231123;
 			
 			// aapt resource value: 0x7f0800aa
 			public const int Base_AlertDialog_AppCompat = 2131230890;
@@ -6725,11 +6725,14 @@ namespace RangoJa.Droid
 			// aapt resource value: 0x7f08000f
 			public const int CardView_Light = 2131230735;
 			
-			// aapt resource value: 0x7f080190
-			public const int MainTheme = 2131231120;
-			
 			// aapt resource value: 0x7f080191
-			public const int MainTheme_Base = 2131231121;
+			public const int MainTheme = 2131231121;
+			
+			// aapt resource value: 0x7f080192
+			public const int MainTheme_Base = 2131231122;
+			
+			// aapt resource value: 0x7f080190
+			public const int MyTheme_Splash = 2131231120;
 			
 			// aapt resource value: 0x7f08002e
 			public const int Platform_AppCompat = 2131230766;

@@ -2,6 +2,7 @@
 using RangoJaDatabaseAccess.DbModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +26,22 @@ namespace RangoJaDatabaseAccess.MySQL
 
         #region GETS
 
+        public async static Task<List<Ingredient>> GetAllIngredientsAsync()
+        {
+            List<Ingredient> ingredients = new List<Ingredient>();
+            string sqlQuery = "SELECT * FROM Ingredients";
+
+            MySqlCommand cmd = Connection.CreateCommand();
+            cmd.CommandText = sqlQuery;
+            DbDataReader reader = await cmd.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
+            {
+                ingredients.Add(new Ingredient() { Id = (int)reader["IdIngredient"], Name = (string)reader["Ingredient"] });
+            }
+            return ingredients;
+        }
+        
         public static List<Ingredient> GetAllIngredients()
         {
             List<Ingredient> ingredients = new List<Ingredient>();
@@ -213,6 +230,21 @@ namespace RangoJaDatabaseAccess.MySQL
             return recipeIds;
         }
 
+        public async static Task<List<ApplianceType>> GetAllApplianceTypesAsync()
+        {
+            List<ApplianceType> appliances = new List<ApplianceType>();
+            string sqlQuery = "SELECT * FROM Appliance_Type";
+
+            MySqlCommand cmd = Connection.CreateCommand();
+            cmd.CommandText = sqlQuery;
+            DbDataReader reader = await cmd.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
+                appliances.Add(new ApplianceType() { Id = (int)reader["IdApplianceType"], Name = (string)reader["ApplianceName"] });
+
+            return appliances;
+        }
+
         public static List<ApplianceType> GetAllApplianceTypes()
         {
             List<ApplianceType> appliances = new List<ApplianceType>();
@@ -230,6 +262,21 @@ namespace RangoJaDatabaseAccess.MySQL
             return appliances;
         }
 
+        public async static Task<List<Unit>> GetAllUnitsAsync()
+        {
+            List<Unit> units = new List<Unit>();
+            string sqlQuery = "SELECT * FROM Units";
+
+            MySqlCommand cmd = Connection.CreateCommand();
+            cmd.CommandText = sqlQuery;
+            DbDataReader reader = await cmd.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
+                units.Add(new Unit() { Id = (int)reader["IdUnitType"], Name = (string)reader["UnitType"] });
+
+            return units;
+        }
+
         public static List<Unit> GetAllUnits()
         {
             List<Unit> units = new List<Unit>();
@@ -245,6 +292,25 @@ namespace RangoJaDatabaseAccess.MySQL
 
             Connection.Close();
             return units;
+        }
+
+        /// <summary>
+        /// Async implemetation of GetAllRecipeTypesAsync(). Must call Connection.Open() first!
+        /// </summary>
+        /// <returns></returns>
+        public async static Task<List<RecipeType>> GetAllRecipeTypesAsync()
+        {
+            List<RecipeType> recipeTypes = new List<RecipeType>();
+            string sqlQuery = "SELECT * FROM Recipe_Type";
+
+            MySqlCommand cmd = Connection.CreateCommand();
+            cmd.CommandText = sqlQuery;
+            DbDataReader reader = await cmd.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
+                recipeTypes.Add(new RecipeType() { Id = (int)reader["IdRecipeType"], Name = (string)reader["Type"] });
+
+            return recipeTypes;
         }
 
         public static List<RecipeType> GetAllRecipeTypes()

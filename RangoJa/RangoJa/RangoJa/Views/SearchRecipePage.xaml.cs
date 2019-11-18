@@ -25,7 +25,7 @@ namespace RangoJa.Views
         {
             if (!string.IsNullOrEmpty(ViewModel.SearchQuery))
             {
-                lsView.ItemsSource = ViewModel.AllIngredients.Where(x => x.Name.ToLower().StartsWith(ViewModel.SearchQuery.ToLower()));
+                lsView.ItemsSource = Utils.AllIngridients.Where(x => x.Name.ToLower().StartsWith(ViewModel.SearchQuery.ToLower()));
             }
             else
                 lsView.ItemsSource = null;

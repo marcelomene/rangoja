@@ -1,4 +1,5 @@
 ﻿using RangoJa.Views;
+using RangoJaDatabaseAccess.MySQL;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -16,6 +17,11 @@ namespace RangoJa
 #if DEBUG
             HotReloader.Current.Run(this);
 #endif
+            Utils.AllIngridients = MySQLDbAccess.GetAllIngredients();
+            Utils.AllUnits = MySQLDbAccess.GetAllUnits();
+            Utils.AllRecipeTypes = MySQLDbAccess.GetAllRecipeTypes();
+            Utils.AllAppliances = MySQLDbAccess.GetAllApplianceTypes();
+
             MainPage = new NavigationPage(new MainPage());
         }
 

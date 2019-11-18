@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -13,17 +14,21 @@ namespace RangoJa.ViewModel
 
         public ICommand GoToIngredientsCommand { get; set; }
 
+        private bool isLoading { get; set; }
+        public bool IsLoading
+        {
+            get => isLoading;
+            set
+            {
+                isLoading = value;
+                OnPropertyChanged(nameof(IsLoading));
+            }
+        }
+        
         public MainPageViewModel()
         {
-            GoToSearchRecipeCommand = new Command(
-                execute: () => NavigationProvider.NavigateTo(new SearchRecipePage()),
-                canExecute: () => true);
-
-            GoToIngredientsCommand = new Command(
-                 execute: () => NavigationProvider.NavigateTo(new InsertRecipePage()),
-                canExecute: () => true);
+            GoToSearchRecipeCommand = new Command(() => NavigationProvider.NavigateTo(new SearchRecipePage()));
+            GoToIngredientsCommand = new Command(() => NavigationProvider.NavigateTo(new InsertRecipePage()));
         }
-
-      
     }
 }

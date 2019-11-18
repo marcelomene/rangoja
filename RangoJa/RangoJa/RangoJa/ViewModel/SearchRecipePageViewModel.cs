@@ -18,9 +18,7 @@ namespace RangoJa.ViewModel
         public ICommand SearchCommand { get; set; }
 
         public Ingredient SelectedIngredient { get; set; }
-        
-        public List<Ingredient> AllIngredients { get; set; }
-
+       
         private bool isLoading { get; set; }
         public bool IsLoading
         {
@@ -58,7 +56,6 @@ namespace RangoJa.ViewModel
             IngredientsToSearch = new ObservableCollection<Ingredient>();
             ingredientsFound = new ObservableCollection<Ingredient>();
             SearchCommand = new Command(() => SearchRecipes(), () => true);
-            LoadAllIngredients();
         }
 
         public void IncludeInSearch()
@@ -67,15 +64,10 @@ namespace RangoJa.ViewModel
             SearchQuery = string.Empty;
         }
 
-        public void LoadAllIngredients()
-        {
-            IsLoading = true;
-            AllIngredients = MySQLDbAccess.GetAllIngredients();
-            IsLoading = false;
-        }
-
         public void SearchRecipes()
         {
+            IsLoading = true;
+
             List<Ingredient> listSurrogate = new List<Ingredient>();
             List<Recipe> recipes = new List<Recipe>();
 
@@ -86,8 +78,15 @@ namespace RangoJa.ViewModel
 
             foreach (var id in recipeIds.Distinct())
                 recipes.Add(MySQLDbAccess.GetRecipeById(id));
+            OrderRecipes(recipes);
 
+            IsLoading = false;
             NavigationProvider.NavigateTo(new SearchResultPage(recipes));
+        }
+
+        private void OrderRecipes(List<Recipe> recipes)
+        {
+            
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -17,10 +18,6 @@ namespace RangoJa.ViewModel
         public string SearchQuery { get; set; }
         public ICommand InsertRecipeCommand { get; set; }
         public Ingredient SelectedIngredient { get; set; }
-        public List<Ingredient> AllIngredients { get; set; }
-        public List<Unit> AllUnits { get; set; }
-        public List<ApplianceType> AllAppliances { get; set; }
-        public List<RecipeType> AllRecipeTypes { get; set; }
 
         #region Recipe
 
@@ -72,48 +69,21 @@ namespace RangoJa.ViewModel
             ingredientsFound = new ObservableCollection<Ingredient>();
             InsertRecipeCommand = new Command(() => InsertRecipe(), () => true);
             RecipeToAdd = new Recipe();
-            LoadAllIngredients();
-            LoadAllUnits();
-            LoadAllApliances();
-            LoadAllRecipeTypes();
         }
 
         public void IncludeInSearch()
         {
-            IngredientInfo ingInfo = new IngredientInfo();
-            ingInfo.Ingredient = SelectedIngredient;
-            ingInfo.Unit = AllUnits.FirstOrDefault(x => x.Name.Contains(UnitType));
-            ingInfo.Amount = Amount;
-            IngredientsToSearch.Add(ingInfo);
-            SearchQuery = string.Empty;
-        }
-
-        public void LoadAllIngredients()
-        {
-            IsLoading = true;
-            AllIngredients = MySQLDbAccess.GetAllIngredients();
-            IsLoading = false;
-        }
-
-        public void LoadAllUnits()
-        {
-            IsLoading = true;
-            AllUnits = MySQLDbAccess.GetAllUnits();
-            IsLoading = false;
-        }
-
-        public void LoadAllApliances()
-        {
-            IsLoading = true;
-            AllAppliances = MySQLDbAccess.GetAllApplianceTypes();
-            IsLoading = false;
-        }
-
-        public void LoadAllRecipeTypes()
-        {
-            IsLoading = true;
-            AllRecipeTypes = MySQLDbAccess.GetAllRecipeTypes();
-            IsLoading = false;
+            if (Amount == null || UnitType == null)
+                Utils.DisplayDialog("Erro", "Quantidade e tipo de unidade deste ingrediente não pode ficar em branco");
+            else
+            {
+                IngredientInfo ingInfo = new IngredientInfo();
+                ingInfo.Ingredient = SelectedIngredient;
+                ingInfo.Unit = Utils.AllUnits.FirstOrDefault(x => x.Name.Contains(UnitType));
+                ingInfo.Amount = Amount;
+                IngredientsToSearch.Add(ingInfo);
+                SearchQuery = string.Empty;
+            }
         }
 
         public bool CanInsertRecipe()
@@ -128,20 +98,33 @@ namespace RangoJa.ViewModel
         public void InsertRecipe()
         { //GOOOOOOOOOO
 
-            if(CanInsertRecipe())
+            try
             {
-                if (IsStove)
-                    RecipeToAdd.Appliance = AllAppliances.FirstOrDefault(x => x.Id == 7);
-                if (IsMicrowave)
-                    RecipeToAdd.Appliance = AllAppliances.FirstOrDefault(x => x.Id == 9);
-                if (IsVegetarian)
-                    RecipeToAdd.RecipeType = AllRecipeTypes.FirstOrDefault(x => x.Id == 3);
-                if (IsVegan)
-                    RecipeToAdd.RecipeType = AllRecipeTypes.FirstOrDefault(x => x.Id == 2);
-                RecipeToAdd.Ingredients = IngredientsToSearch.ToList();
+                if (CanInsertRecipe())
+                {
+                    if (IsStove)
+                        RecipeToAdd.Appliance = Utils.AllAppliances.FirstOrDefault(x => x.Id == 7);
+                    if (IsMicrowave)
+                        RecipeToAdd.Appliance = Utils.AllAppliances.FirstOrDefault(x => x.Id == 9);
+                    if (IsVegetarian)
+                        RecipeToAdd.RecipeType = Utils.AllRecipeTypes.FirstOrDefault(x => x.Id == 3);
+                    if (IsVegan)
+                        RecipeToAdd.RecipeType = Utils.AllRecipeTypes.FirstOrDefault(x => x.Id == 2);
+                    RecipeToAdd.Ingredients = IngredientsToSearch.ToList();
+                    MySQLDbAccess.InsertRecipe(RecipeToAdd);
+                }
+                else
+                    Utils.DisplayDialog("Aviso", "Verifique se os campos foram preenchidos corretamente.");
             }
-            MySQLDbAccess.InsertRecipe(RecipeToAdd);
-            NavigationProvider.NavigateBack();
+            catch(Exception e)
+            {
+#if DEBUG
+                Utils.DisplayDialog(e.Source, e.Message);
+
+#else
+                Utils.DisplayDialog("Erro", "Ocorreu um erro ao tentar inserir esta receita.");
+#endif
+            }
         }
     }
 }

@@ -2,16 +2,23 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="RangoJa.Views.SearchRecipePage"
-             xmlns:vm="clr-namespace:RangoJa.ViewModel">
-    
-    <!--<ContentPage.BindingContext>
-        <vm:SearchRecipePageViewModel/>
-    </ContentPage.BindingContext>-->
-    
+             xmlns:vm="clr-namespace:RangoJa.ViewModel"
+             xmlns:local="clr-namespace:RangoJa.Convertes">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:InverseBooleanConverter x:Key="boolInverse"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <ContentPage.Content>
         <StackLayout>
-            <ActivityIndicator IsVisible="{Binding IsLoading}" IsRunning="{Binding IsLoading}" Color="Orange"  VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
-            <Image Source="AppIcon.png" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" HeightRequest="100" WidthRequest="100"/>
+            <StackLayout IsVisible="{Binding IsLoading}">
+                <ActivityIndicator IsVisible="True" IsRunning="True"  Color="Orange"  VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+                <Label Text="Carregando..."/>
+            </StackLayout>
+            <StackLayout IsVisible="{Binding IsLoading, Converter={StaticResource boolInverse}}">
+                <Image Source="AppIcon.png" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" HeightRequest="100" WidthRequest="100"/>
                 <Label Text="Digite aqui os seus ingredientes disponíveis" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Margin="20"/>
 
                 <Entry Text="{Binding SearchQuery}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" WidthRequest="300" TextChanged="Entry_TextChanged"/>
@@ -31,9 +38,10 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                
-            <!--Insert filter stuff here later-->
+
+                <!--Insert filter stuff here later-->
                 <Button Text="Buscar receita" Command="{Binding SearchCommand}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="#6FA788" Margin="10" CornerRadius="10" WidthRequest="300" HeightRequest="50"/>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
