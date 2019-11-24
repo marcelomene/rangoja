@@ -34,12 +34,9 @@ namespace RangoJa.Views
 
         private async void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            if (this.lsView.SelectedItem == null)
-                return;
             bool include = await DisplayAlert("Aviso", "Incluir este ingrediente na receita?", "Sim", "Não");
             if (include)
                 ViewModel.IncludeInSearch();
-            this.lsView.SelectedItem = null;
         }
 
         private void Ingrediente_TextChanged(object sender, TextChangedEventArgs e)

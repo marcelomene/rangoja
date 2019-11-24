@@ -87,11 +87,13 @@ namespace RanjoJaTests
         [TestMethod]
         public void MYSQLDbAccessTests()
         {
+            List<int> recipesIds = MySQLDbAccess.GetRecipesIdsThatContainsIngredients(new List<Ingredient>() { new Ingredient() { Id = 283, Name = "Açucar" }}, new RecipeType() { Id = 3, Name = "Vegetariano" });
+
             List<Unit> units = MySQLDbAccess.GetAllUnits();
             List<ApplianceType> appliances = MySQLDbAccess.GetAllApplianceTypes();
             Recipe recipe = MySQLDbAccess.GetRecipeById(2);
             
-            List<int> recipesIds = MySQLDbAccess.GetRecipesIdsThatContainsIngredients(new List<Ingredient>() { new Ingredient() { Id = 24, Name = "Banana" } });
+            //List<int> recipesIds = MySQLDbAccess.GetRecipesIdsThatContainsIngredients(new List<Ingredient>() { new Ingredient() { Id = 24, Name = "Banana" } });
             List<Ingredient> ingredients = MySQLDbAccess.GetAllIngredients();
             Ingredient ingredient = MySQLDbAccess.GetIngredientById(111);
             Ingredient ingredient2 = MySQLDbAccess.GetIngredientByName("Limão");

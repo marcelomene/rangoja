@@ -16,9 +16,11 @@ namespace RangoJa.ViewModel
     {
         public string SearchQuery { get; set; }
         public ICommand SearchCommand { get; set; }
-
         public Ingredient SelectedIngredient { get; set; }
-       
+        public bool IsVegetarian { get; set; }
+        public bool IsVegan { get; set; }
+        public RecipeType RecipeTypeFilter { get; set; }
+
         private bool isLoading { get; set; }
         public bool IsLoading
         {
@@ -74,7 +76,12 @@ namespace RangoJa.ViewModel
             foreach (var ing in IngredientsToSearch)
                 listSurrogate.Add(ing);
 
-            List<int> recipeIds = MySQLDbAccess.GetRecipesIdsThatContainsIngredients(listSurrogate);
+            if (IsVegan)
+                RecipeTypeFilter = Utils.AllRecipeTypes.FirstOrDefault(x => x.Id == 2);
+            else if(IsVegetarian)
+                RecipeTypeFilter = Utils.AllRecipeTypes.FirstOrDefault(x => x.Id == 3);
+
+            List<int> recipeIds = MySQLDbAccess.GetRecipesIdsThatContainsIngredients(listSurrogate, RecipeTypeFilter);
 
             foreach (var id in recipeIds.Distinct())
                 recipes.Add(MySQLDbAccess.GetRecipeById(id));

@@ -112,8 +112,6 @@ namespace RangoJa.ViewModel
                         RecipeToAdd.RecipeType = Utils.AllRecipeTypes.FirstOrDefault(x => x.Id == 2);
                     RecipeToAdd.Ingredients = IngredientsToSearch.ToList();
                     MySQLDbAccess.InsertRecipe(RecipeToAdd);
-                    Utils.DisplayDialog("Sucesso!", "Receita incluída com sucesso!");
-                    NavigationProvider.NavigateBack();
                 }
                 else
                     Utils.DisplayDialog("Aviso", "Verifique se os campos foram preenchidos corretamente.");

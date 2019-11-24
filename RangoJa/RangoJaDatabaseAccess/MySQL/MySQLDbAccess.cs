@@ -202,19 +202,32 @@ namespace RangoJaDatabaseAccess.MySQL
             return recipe;
         }
 
-        public static List<int> GetRecipesIdsThatContainsIngredients(List<Ingredient> ingredients)
+        public static List<int> GetRecipesIdsThatContainsIngredients(List<Ingredient> ingredients, RecipeType typeFilter)
         {
             List<int> recipeIds = new List<int>();
+            string sqlQuery = string.Empty;
+            string sqlQueryJoin = string.Empty;
 
-            string sqlQuery = $"SELECT IdRecipe FROM Recipe_Ingredients";
-            string sqlWhere = " WHERE IdIngredient IN";
+            if(typeFilter != null)
+            {
+                sqlQuery = "SELECT Recipe_Ingredients.IdRecipe, Recipe.IdRecipeType FROM Recipe_Ingredients " +
+                 "LEFT JOIN Recipe ON(Recipe.IdRecipe = Recipe_Ingredients.IdRecipe) " +
+                 "LEFT JOIN Recipe_Type ON(Recipe_Type.IdRecipeType = Recipe.IdRecipeType) ";
+            }
+            else
+                sqlQuery = $"SELECT Recipe_Ingredients.IdRecipe FROM Recipe_Ingredients";
+
+            string sqlWhere = " WHERE Recipe_Ingredients.IdIngredient IN";
             string sqlIN = string.Empty;
 
             for (int i = 0; i < ingredients.Count; i++)
                 sqlIN += $"{ingredients[i].Id},";
 
             sqlQuery += sqlWhere + "(" + sqlIN.Remove(sqlIN.Length - 1, 1) + ")";
-            sqlQuery += " group by IdRecipe";
+
+            if (typeFilter != null)
+                sqlQuery += $"AND Recipe.IdRecipeType = {typeFilter.Id} ";
+            sqlQuery += " GROUP BY Recipe_Ingredients.IdRecipe";
 
             Connection.Open();
 
