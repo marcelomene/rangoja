@@ -78,17 +78,27 @@ namespace RangoJa.ViewModel
 
             if (IsVegan)
                 RecipeTypeFilter = Utils.AllRecipeTypes.FirstOrDefault(x => x.Id == 2);
-            else if(IsVegetarian)
+            else if (IsVegetarian)
                 RecipeTypeFilter = Utils.AllRecipeTypes.FirstOrDefault(x => x.Id == 3);
+            else
+                RecipeTypeFilter = null;
 
             List<int> recipeIds = MySQLDbAccess.GetRecipesIdsThatContainsIngredients(listSurrogate, RecipeTypeFilter);
 
-            foreach (var id in recipeIds.Distinct())
-                recipes.Add(MySQLDbAccess.GetRecipeById(id));
-            OrderRecipes(recipes);
+            if (recipeIds.Any())
+            {
+                foreach (var id in recipeIds.Distinct())
+                    recipes.Add(MySQLDbAccess.GetRecipeById(id));
+                OrderRecipes(recipes);
 
-            IsLoading = false;
-            NavigationProvider.NavigateTo(new SearchResultPage(recipes));
+                IsLoading = false;
+                NavigationProvider.NavigateTo(new SearchResultPage(recipes));
+            }
+            else
+            {
+                Utils.DisplayDialog("Aviso", "Desculpe, não encontramos nada! Talvez será necessário pedir um xis :D");
+                NavigationProvider.NavigateBack();
+            }
         }
 
         private void OrderRecipes(List<Recipe> recipes)
